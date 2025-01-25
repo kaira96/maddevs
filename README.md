@@ -33,3 +33,7 @@ $ pyhton manage.py migrate
 $ pyhton manage.py createsuperuser
 $ pyhton manage.py runserver
 ```
+## Как выполнять тесты
+```sh
+$ pytest --cov
+```
