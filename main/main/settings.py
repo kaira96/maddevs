@@ -1,10 +1,14 @@
+import os
+from datetime import timedelta
 from pathlib import Path
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-SECRET_KEY = "django-insecure-6g&so8$h@0r9lv^hh=jb&yxug#=41rxcscoi9ux+)gvwz65$qm"
+SECRET_KEY = os.getenv("SECRET_KEY", "django-insecure-f2un3gf-cock-(3646#0=nwoi*qs)7pt2inside5mjd9_qk2qctg")
 
 DEBUG = True
+
+DJANGO_ENV = os.getenv("DJANGO_ENV", "local")
 
 ALLOWED_HOSTS = []
 
@@ -35,6 +39,30 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ),
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
+}
+
+SIMPLE_JWT = {
+    "ACCESS_TOKEN_LIFETIME": timedelta(
+        minutes=5
+    ),
+    "REFRESH_TOKEN_LIFETIME": timedelta(
+        days=1
+    )
+}
+
+SPECTACULAR_SETTINGS = {
+    'TITLE': 'MadDevs API',
+    'DESCRIPTION': 'Test project',
+    'VERSION': '1.0.0',
+    'SERVE_INCLUDE_SCHEMA': False,
+    # OTHER SETTINGS
+}
+
 ROOT_URLCONF = "main.urls"
 
 TEMPLATES = [
@@ -59,8 +87,12 @@ WSGI_APPLICATION = "main.wsgi.application"
 
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": os.getenv("DATABASE_NAME"),
+        "USER": os.getenv("DATABASE_USER"),
+        "PASSWORD": os.getenv("DATABASE_PASSWORD"),
+        "HOST": os.getenv("DATABASE_HOST"),
+        "PORT": os.getenv("DATABASE_PORT"),
     }
 }
 
