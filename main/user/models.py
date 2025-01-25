@@ -65,7 +65,7 @@ class Patient(TimeStampMixin):
     user = models.ForeignKey(
         to=User,
         on_delete=models.CASCADE,
-        related_name='patiens',
+        related_name='patients',
         verbose_name=_('User')
     )
     date_of_birth = models.DateField()

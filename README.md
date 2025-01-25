@@ -1,9 +1,9 @@
 # Шаблон README
 ## Структура репозитория
-1. `tests` = <Название папки с тестами>
-2. `code` = <Название папки с кодом>
-3. `docker` = <Название `dockerfile` или `docker-compose.yaml`>
-4. `migrations` = <Название и путь до файлов миграций в БД>
+1. `new_job/main/tests` = <Название папки с тестами>
+2. `new_job/main` = <Название папки с кодом>
+3. `new_job/docker-compose.yml` = <Название `dockerfile` или `docker-compose.yaml`>
+4. `new_job/user/migrations` = <Название и путь до файлов миграций в БД>
 
 - `python ^3.13`
 - `poetry ==2.0.1`
