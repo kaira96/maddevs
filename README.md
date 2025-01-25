@@ -5,13 +5,21 @@
 3. `docker` = <Название `dockerfile` или `docker-compose.yaml`>
 4. `migrations` = <Название и путь до файлов миграций в БД>
 
-- `python ^3.12`
+- `python ^3.13`
 - `poetry ==2.0.1`
 - `django >=5.1.5,<6.0.0`
 - `djangorestframework >=3.15.2,<4.0.0`
 - `djangorestframework-simplejwt >=5.4.0,<6.0.0`
 - `drf-spectacular >=0.28.0,<0.29.0`
 - `postgres ^17.0,<18.0`
+
+## Как запустить локальное окружение через docker
+```sh
+$ git clone 'link'
+$ cp .env.sample .env
+$ docker-compose -f docker-compose.yml up --build -d
+$ docker-compose logs # For see containers logs.
+```
 
 ## Как запустить локальное окружение через локальную машину
 ```sh

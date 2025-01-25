@@ -26,6 +26,7 @@ INSTALLED_APPS = [
     'drf_spectacular',
 
     # Apps
+    'general'
     'user',
 ]
 

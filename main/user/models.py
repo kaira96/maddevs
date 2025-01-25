@@ -4,36 +4,9 @@ from django.contrib.auth.validators import UnicodeUsernameValidator
 from django.contrib.postgres.fields import ArrayField
 from django.utils.translation import gettext_lazy as _
 from django.db import models
-from django.contrib.auth.base_user import BaseUserManager
 
-
-# Менеджер пользователей для кастомной модели User
-class CustomUserManager(BaseUserManager):
-    # Метод для создания обычного пользователя
-    def create_user(self, username, password=None):
-        if not username:
-            raise ValueError('Users must have an username')  # Проверка, что username указан
-        user = self.model(username=username)  # Создаем объект пользователя
-        user.set_password(password)  # Устанавливаем пароль
-        user.save(using=self._db)  # Сохраняем пользователя в базе данных
-        return user
-
-    # Метод для создания суперпользователя
-    def create_superuser(self, username, password):
-        user = self.create_user(username, password=password)  # Создаем пользователя
-        user.is_staff = True  # Устанавливаем флаг сотрудника
-        user.is_superuser = True  # Устанавливаем флаг суперпользователя
-        user.save(using=self._db)  # Сохраняем изменения
-        return user
-
-
-# Миксин для добавления временных меток к моделям
-class TimeStampMixin(models.Model):
-    created_at = models.DateTimeField(auto_now_add=True)  # Дата и время создания записи
-    updated_at = models.DateTimeField(auto_now=True)  # Дата и время последнего обновления
-
-    class Meta:
-        abstract = True  # Указывает, что это абстрактная модель
+from general.models import TimeStampMixin
+from user.managers import CustomUserManager
 
 
 # Перечисление возможных типов пользователей
