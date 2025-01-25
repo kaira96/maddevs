@@ -13,50 +13,42 @@ from user.permissions import IsDoctor
 from user.serializers import PatientSerializer
 
 
-# Представление для входа в систему с получением JWT токена
 class LoginAPIView(APIView):
-    permission_classes = (AllowAny,)  # Разрешение для всех пользователей
-    serializer_class = TokenObtainPairSerializer  # Сериализатор для получения токена
+    permission_classes = (AllowAny,)
+    serializer_class = TokenObtainPairSerializer
 
     @extend_schema(
-        tags=["Auth"],  # Указывает тег для документации API
-        summary="Login"  # Краткое описание метода для документации
+        tags=["Auth"],
+        summary="Login"
     )
     def post(self, request, *args, **kwargs):
-        # Принимаем данные из запроса и проверяем их валидность
         serializer = self.serializer_class(data=request.data)
         try:
-            serializer.is_valid(raise_exception=True)  # Если данные невалидны, вызываем исключение
+            serializer.is_valid(raise_exception=True)
         except TokenError:
-            # Обработка ошибки токена, если токен невалидный
             return Response({"detail": "Token is invalid."}, status=401)
-        # Возвращаем успешный ответ с данными токена
         return Response(serializer.validated_data, status=status.HTTP_200_OK)
 
 
-# Представление для обновления токена (refresh token)
 class RefreshTokenAPIView(TokenRefreshView):
-    permission_classes = (AllowAny,)  # Разрешение для всех пользователей
+    permission_classes = (AllowAny,)
 
     @extend_schema(
-        tags=["Auth"],  # Указывает тег для документации API
-        summary="Refresh token"  # Краткое описание метода для документации
+        tags=["Auth"],
+        summary="Refresh token"
     )
     def post(self, request, *args, **kwargs):
-        # Используем встроенный метод для обновления токена
         return super().post(request, *args, **kwargs)
 
 
-# Представление для получения списка пациентов
 class PatientAPIView(ListAPIView):
-    permission_classes = (IsAuthenticated, IsDoctor)  # Требуется аутентификация и роль "DOCTOR"
-    serializer_class = PatientSerializer  # Сериализатор для отображения данных пациентов
-    queryset = Patient.objects.all()  # Запрос для получения всех пациентов
+    permission_classes = (IsAuthenticated, IsDoctor)
+    serializer_class = PatientSerializer
+    queryset = Patient.objects.all()
 
     @extend_schema(
-        tags=["Patient"],  # Указывает тег для документации API
-        summary="Get list of patients"  # Краткое описание метода для документации
+        tags=["Patient"],
+        summary="Get list of patients"
     )
     def get(self, request, *args, **kwargs):
-        # Обрабатываем GET-запрос для получения списка пациентов
         return super().get(request, *args, **kwargs)

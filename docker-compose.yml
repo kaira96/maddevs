@@ -4,12 +4,12 @@ services:
     restart: always
     build:
       context: .
-      dockerfile: backend/Dockerfile
+      dockerfile: main/Dockerfile
       args:
         FOR_DEVELOPMENT: 'true'
     command: bash -c "python manage.py runserver 0.0.0.0:8000"
     volumes:
-      - ./backend:/app
+      - ./main:/app
     env_file:
       - .env
     ports:
